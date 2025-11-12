@@ -4,20 +4,17 @@ const crypto = require('crypto');
 const app = express();
 const port = 3000;
 
-// Middleware
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
-// Route utama kirim index.html
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// 🔑 Route untuk generate API key dengan prefix
 app.post('/apikeyc/create', (req, res) => {
   try {
     const rawKey = crypto.randomBytes(32).toString('hex');
-    const apiKey = `sk-itumy-v1-api_${rawKey}`; // ← prefix di sini
+    const apiKey = `sk-itumy-v1-api_${rawKey}`;
 
     res.json({
       success: true,
@@ -32,7 +29,6 @@ app.post('/apikeyc/create', (req, res) => {
   }
 });
 
-// Jalankan server
 app.listen(port, () => {
   console.log(`Server berjalan di http://localhost:${port}`);
 });
